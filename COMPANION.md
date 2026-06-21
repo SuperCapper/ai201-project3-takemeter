@@ -8,15 +8,16 @@
 | # | Step | Status |
 |---|---|---|
 | 1 | Design label taxonomy — 3 labels, definitions, edge case rules | ✅ Done |
-| 2 | Collect 200+ text posts and comments from r/nba | ⬜ TODO |
-| 3 | Annotate all examples; document 3 difficult cases | ⬜ TODO |
-| 4 | Split into train / validation / test sets | ⬜ TODO |
-| 5 | Upload CSV to Colab; configure label map in notebook | ⬜ TODO |
-| 6 | Fine-tune `distilbert-base-uncased` on T4 GPU (~5–15 min) | ⬜ TODO |
-| 7 | Write Groq zero-shot baseline prompt; run on test set | ⬜ TODO |
-| 8 | Download `evaluation_results.json` + `confusion_matrix.png` from Colab | ⬜ TODO |
-| 9 | Write evaluation report: accuracy, per-class F1, failure analysis | ⬜ TODO |
-| 10 | Commit all outputs; fill in README and planning.md | ⬜ TODO |
+| 2 | Complete `planning.md` — community, labels, metrics, success criteria, AI Tool Plan | ✅ Done |
+| 3 | Collect 200+ text posts and comments from r/nba | ⬜ TODO |
+| 4 | Annotate all examples; document 3 difficult cases | ⬜ TODO |
+| 5 | Split into train / validation / test sets | ⬜ TODO |
+| 6 | Upload CSV to Colab; configure label map in notebook | ⬜ TODO |
+| 7 | Fine-tune `distilbert-base-uncased` on T4 GPU (~5–15 min) | ⬜ TODO |
+| 8 | Write Groq zero-shot baseline prompt; run on test set | ⬜ TODO |
+| 9 | Download `evaluation_results.json` + `confusion_matrix.png` from Colab | ⬜ TODO |
+| 10 | Write evaluation report: accuracy, per-class F1, failure analysis | ⬜ TODO |
+| 11 | Commit all outputs; fill in README | ⬜ TODO |
 
 ---
 
@@ -209,17 +210,23 @@ At least 3 wrong predictions with:
 - [x] Project scaffold created — `data/`, `outputs/`, `planning.md`, `README.md`
 - [x] GitHub repo initialized at `https://github.com/SuperCapper/ai201-project3-takemeter`
 - [x] Scope decisions locked — text posts + comments; 3 labels; ~70/15/15 split
+- [x] `planning.md` complete — all 7 sections filled in with specific, verifiable answers
+  - Community rationale, full label definitions with 2 examples each
+  - Edge case decision rules for both hard label boundaries
+  - Per-label collection targets (60 analysis / 80 hot_take / 60 reaction)
+  - Evaluation metrics: per-class F1 as primary, macro-F1 as summary, accuracy as context
+  - Success criteria: 5 specific numeric thresholds (overall acc ≥70%, macro-F1 ≥0.65, per-class F1 ≥0.60–0.65, fine-tuned beats baseline by ≥5 macro-F1 points)
+  - AI Tool Plan: label stress-testing, pre-labeling 50 examples with CSV disclosure columns, failure pattern analysis with manual verification protocol
 
 ### Yet to build
+- [ ] Run label stress-test (generate boundary posts with AI, tighten definitions if needed)
 - [ ] Collect 200+ posts/comments from r/nba
-- [ ] Annotate all examples; document 3 difficult cases in README
+- [ ] Annotate all examples; document hard cases in planning.md Difficult Examples table
 - [ ] Build and upload `data/labeled_data.csv`
-- [ ] Configure label map in Colab notebook
-- [ ] Run fine-tuning on T4 GPU
-- [ ] Write and run Groq zero-shot baseline
+- [ ] Configure label map in Colab notebook; run fine-tuning on T4 GPU
+- [ ] Write and run Groq zero-shot baseline prompt
 - [ ] Download and commit `evaluation_results.json` + `confusion_matrix.png`
-- [ ] Fill in evaluation tables in README
-- [ ] Write failure analysis and reflection
+- [ ] Fill in evaluation tables in README; write failure analysis and reflection
 
 ### Known risks / watch-outs
 - **Class imbalance:** `hot_take` will be over-represented in the wild — actively seek `analysis` posts to avoid the model defaulting to `hot_take`
@@ -231,14 +238,15 @@ At least 3 wrong predictions with:
 
 ## Building Next and Why
 
-**Next: collect and annotate the dataset**
+**Next: label stress-test, then data collection**
 
-The taxonomy is designed — the only thing blocking everything else is having 200+ labeled examples. Data collection and annotation is the critical path:
+`planning.md` is complete. Before annotating 200 examples, run the AI stress-test (§7 of planning.md): generate 10–15 boundary posts and verify the edge case rules resolve them cleanly. Fix any definition gaps now.
 
-1. Browse r/nba and collect raw text into a spreadsheet or CSV (no code needed yet)
-2. Read and label each example using the taxonomy above
-3. Flag any examples that required a judgment call for the "difficult cases" section
-4. Aim for at least 50 of each label before stopping — if one class is under 20%, go find more of that type specifically
-5. Once the CSV is complete, upload to Colab and the rest of the pipeline follows
+Then: data collection and annotation is the critical path for everything else.
 
-The hint from the assignment is worth repeating: *collect before you label, and read 30–40 first before committing to anything.* The taxonomy is already grounded in real post patterns, but annotation will surface edge cases the definitions don't yet cover.
+1. Run label stress-test — generate boundary `hot_take`/`analysis` posts; tighten rules if any are unclassifiable
+2. Browse r/nba and collect raw text into the CSV (`data/labeled_data.csv`)
+3. Pre-label first 50 with Groq; manually review and record overrides in `human_overrode` column
+4. Annotate remaining 150 manually; flag hard cases in planning.md Difficult Examples table
+5. Check distribution — if any label is under 40, actively source more of that type before stopping
+6. Once CSV is complete, upload to Colab and the fine-tuning pipeline follows
