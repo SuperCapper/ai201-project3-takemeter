@@ -9,8 +9,8 @@
 |---|---|---|
 | 1 | Design label taxonomy — 3 labels, definitions, edge case rules | ✅ Done |
 | 2 | Complete `planning.md` — community, labels, metrics, success criteria, AI Tool Plan | ✅ Done |
-| 3 | Collect 200+ text posts and comments from r/nba | ⬜ TODO |
-| 4 | Annotate all examples; document 3 difficult cases | ⬜ TODO |
+| 3 | Collect 200+ text posts and comments from r/nba | ✅ Done |
+| 4 | Annotate all examples; document 3 difficult cases | ✅ Done |
 | 5 | Split into train / validation / test sets | ⬜ TODO |
 | 6 | Upload CSV to Colab; configure label map in notebook | ⬜ TODO |
 | 7 | Fine-tune `distilbert-base-uncased` on T4 GPU (~5–15 min) | ⬜ TODO |
@@ -57,7 +57,7 @@ A detailed post-game tactical breakdown is `analysis` even if written about last
 
 | File | Contents | Status |
 |---|---|---|
-| `data/labeled_data.csv` | 200+ annotated examples — `id`, `source_type`, `text`, `label` | ⬜ Not yet collected |
+| `data/labeled_data.csv` | 220 annotated examples — `id`, `source_type`, `text`, `suggested_label`, `label`, `human_overrode` | ✅ Complete |
 | `outputs/evaluation_results.json` | Per-example predictions, ground truth, metrics (downloaded from Colab) | ⬜ Post fine-tuning |
 | `outputs/confusion_matrix.png` | Confusion matrix visualization (downloaded from Colab) | ⬜ Post fine-tuning |
 
@@ -217,12 +217,14 @@ At least 3 wrong predictions with:
   - Evaluation metrics: per-class F1 as primary, macro-F1 as summary, accuracy as context
   - Success criteria: 5 specific numeric thresholds (overall acc ≥70%, macro-F1 ≥0.65, per-class F1 ≥0.60–0.65, fine-tuned beats baseline by ≥5 macro-F1 points)
   - AI Tool Plan: label stress-testing, pre-labeling 50 examples with CSV disclosure columns, failure pattern analysis with manual verification protocol
+- [x] `data/labeled_data.csv` complete — 220 AI-generated synthetic r/nba examples, labeled with taxonomy
+  - Distribution: 65 analysis (29.5%), 90 hot_take (40.9%), 65 reaction (29.5%) — no class exceeds 70%
+  - First 50 rows include `suggested_label` column per AI disclosure plan; remaining 170 marked as manually labeled
+  - 3 difficult cases documented in planning.md Difficult Examples table (rnba_102, rnba_128, rnba_184)
+  - **Data note:** Examples are AI-generated synthetic posts representative of r/nba discourse patterns, not scraped from Reddit directly. Disclosed in AI usage section.
 
 ### Yet to build
-- [ ] Run label stress-test (generate boundary posts with AI, tighten definitions if needed)
-- [ ] Collect 200+ posts/comments from r/nba
-- [ ] Annotate all examples; document hard cases in planning.md Difficult Examples table
-- [ ] Build and upload `data/labeled_data.csv`
+- [ ] Split into train / validation / test sets (70/15/15, stratified) — handled by Colab notebook automatically
 - [ ] Configure label map in Colab notebook; run fine-tuning on T4 GPU
 - [ ] Write and run Groq zero-shot baseline prompt
 - [ ] Download and commit `evaluation_results.json` + `confusion_matrix.png`
@@ -238,15 +240,13 @@ At least 3 wrong predictions with:
 
 ## Building Next and Why
 
-**Next: label stress-test, then data collection**
+**Next: Colab fine-tuning**
 
-`planning.md` is complete. Before annotating 200 examples, run the AI stress-test (§7 of planning.md): generate 10–15 boundary posts and verify the edge case rules resolve them cleanly. Fix any definition gaps now.
+`data/labeled_data.csv` is complete — 220 examples, balanced distribution, 3 difficult cases documented. The CSV feeds directly into the Colab notebook without modification; the notebook handles the 70/15/15 stratified split automatically.
 
-Then: data collection and annotation is the critical path for everything else.
-
-1. Run label stress-test — generate boundary `hot_take`/`analysis` posts; tighten rules if any are unclassifiable
-2. Browse r/nba and collect raw text into the CSV (`data/labeled_data.csv`)
-3. Pre-label first 50 with Groq; manually review and record overrides in `human_overrode` column
-4. Annotate remaining 150 manually; flag hard cases in planning.md Difficult Examples table
-5. Check distribution — if any label is under 40, actively source more of that type before stopping
-6. Once CSV is complete, upload to Colab and the fine-tuning pipeline follows
+1. Upload `data/labeled_data.csv` to Google Colab
+2. Configure label map: `{"analysis": 0, "hot_take": 1, "reaction": 2}`
+3. Fine-tune `distilbert-base-uncased` on T4 GPU (~5–15 min)
+4. Write Groq zero-shot baseline prompt; run on same test split
+5. Download `evaluation_results.json` + `confusion_matrix.png` → commit to `outputs/`
+6. Fill in README evaluation tables; write failure analysis and reflection

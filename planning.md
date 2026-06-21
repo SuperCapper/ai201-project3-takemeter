@@ -237,11 +237,11 @@ The +5 macro-F1 gap over the Groq baseline is the real success criterion. Fine-t
 
 ## Difficult Examples
 
-*(Document as annotation proceeds — at least 3 required)*
-
 | # | Post text (truncated) | Could be | Decision | Rule applied |
 |---|---|---|---|---|
-| | | | | |
+| 1 | "Karl Malone deserved the MVP award over Jordan in 1998... but Malone had a better regular season by every statistical measure." | `analysis` or `hot_take` | `hot_take` | "Better by every statistical measure" is asserted, not demonstrated — no specific stats are cited and no peer comparison is made. Removing the evidence framing leaves only an opinion with no coherent argument standing. The stat claim is decorative, not genuinely argumentative. |
+| 2 | "The refs decided that series... Every call went one way and anyone with eyes could see it." | `reaction` or `hot_take` | `hot_take` | Although it references a specific recent series (the event), the claim "every call went one way" is a generalizing statement about an entire series, not a reaction to a single play or moment. It survives removal of the series reference — the same sentence could be written about any series. The post characterizes patterns across multiple games. |
+| 3 | "The play-in loss hurts worse than a first-round exit. At least in the first round you are in the playoffs. Getting knocked out before the bracket even starts feels uniquely embarrassing." | `reaction` or `hot_take` | `hot_take` | Even though this was almost certainly prompted by a specific play-in loss, the claim is a general opinion about playoff formats and how different elimination types feel. It does not describe the specific game, a specific play, or a specific moment. The claim generalizes completely independently of the triggering event. |
 
 ---
 
