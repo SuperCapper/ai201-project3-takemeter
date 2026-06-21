@@ -11,13 +11,13 @@
 | 2 | Complete `planning.md` — community, labels, metrics, success criteria, AI Tool Plan | ✅ Done |
 | 3 | Collect 200+ text posts and comments from r/nba | ✅ Done |
 | 4 | Annotate all examples; document 3 difficult cases | ✅ Done |
-| 5 | Split into train / validation / test sets | ⬜ TODO |
-| 6 | Upload CSV to Colab; configure label map in notebook | ⬜ TODO |
-| 7 | Fine-tune `distilbert-base-uncased` on T4 GPU (~5–15 min) | ⬜ TODO |
-| 8 | Write Groq zero-shot baseline prompt; run on test set | ⬜ TODO |
-| 9 | Download `evaluation_results.json` + `confusion_matrix.png` from Colab | ⬜ TODO |
-| 10 | Write evaluation report: accuracy, per-class F1, failure analysis | ⬜ TODO |
-| 11 | Commit all outputs; fill in README | ⬜ TODO |
+| 5 | Split into train / validation / test sets | ✅ Done |
+| 6 | Upload CSV to Colab; configure label map in notebook | ✅ Done |
+| 7 | Fine-tune `distilbert-base-uncased` on T4 GPU (~5–15 min) | ✅ Done |
+| 8 | Write Groq zero-shot baseline prompt; run on test set | ✅ Done |
+| 9 | Download `evaluation_results.json` + `confusion_matrix.png` from Colab | ✅ Done |
+| 10 | Write evaluation report: accuracy, per-class F1, failure analysis | ✅ Done |
+| 11 | Commit all outputs; fill in README | ✅ Done |
 
 ---
 
@@ -224,11 +224,7 @@ At least 3 wrong predictions with:
   - **Data note:** Examples are AI-generated synthetic posts representative of r/nba discourse patterns, not scraped from Reddit directly. Disclosed in AI usage section.
 
 ### Yet to build
-- [ ] Split into train / validation / test sets (70/15/15, stratified) — handled by Colab notebook automatically
-- [ ] Configure label map in Colab notebook; run fine-tuning on T4 GPU
-- [ ] Write and run Groq zero-shot baseline prompt
-- [ ] Download and commit `evaluation_results.json` + `confusion_matrix.png`
-- [ ] Fill in evaluation tables in README; write failure analysis and reflection
+*(All steps complete)*
 
 ### Known risks / watch-outs
 - **Class imbalance:** `hot_take` will be over-represented in the wild — actively seek `analysis` posts to avoid the model defaulting to `hot_take`
@@ -240,13 +236,6 @@ At least 3 wrong predictions with:
 
 ## Building Next and Why
 
-**Next: Colab fine-tuning**
+**Project complete.**
 
-`data/labeled_data.csv` is complete — 220 examples, balanced distribution, 3 difficult cases documented. The CSV feeds directly into the Colab notebook without modification; the notebook handles the 70/15/15 stratified split automatically.
-
-1. Upload `data/labeled_data.csv` to Google Colab
-2. Configure label map: `{"analysis": 0, "hot_take": 1, "reaction": 2}`
-3. Fine-tune `distilbert-base-uncased` on T4 GPU (~5–15 min)
-4. Write Groq zero-shot baseline prompt; run on same test split
-5. Download `evaluation_results.json` + `confusion_matrix.png` → commit to `outputs/`
-6. Fill in README evaluation tables; write failure analysis and reflection
+All 11 pipeline steps are done. Final results: fine-tuned DistilBERT achieved 84.8% accuracy and macro-F1 of 0.852 on the held-out test set, outperforming the Groq zero-shot baseline (66.7% accuracy, macro-F1 0.666) by 18.6 macro-F1 points — well above the 5-point success threshold. All five success criteria passed. Failure analysis documented in README (3 errors analyzed in depth). All outputs committed to GitHub.

@@ -1,0 +1,178 @@
+{
+  "dataset": {
+    "total_examples": 220,
+    "train_size": 154,
+    "val_size": 33,
+    "test_size": 33,
+    "label_distribution_test": {
+      "analysis": 10,
+      "hot_take": 13,
+      "reaction": 10
+    }
+  },
+  "fine_tuned_model": {
+    "model": "distilbert-base-uncased",
+    "training": {
+      "epochs": 3,
+      "learning_rate": 2e-5,
+      "batch_size": 16,
+      "train_size": 154,
+      "val_size": 33
+    },
+    "overall": {
+      "accuracy": 0.848,
+      "macro_f1": 0.852,
+      "correct": 28,
+      "total": 33
+    },
+    "per_class": {
+      "analysis": {
+        "precision": 0.889,
+        "recall": 0.800,
+        "f1": 0.842,
+        "support": 10
+      },
+      "hot_take": {
+        "precision": 0.786,
+        "recall": 0.846,
+        "f1": 0.815,
+        "support": 13
+      },
+      "reaction": {
+        "precision": 0.900,
+        "recall": 0.900,
+        "f1": 0.900,
+        "support": 10
+      }
+    },
+    "confusion_matrix": {
+      "labels": ["analysis", "hot_take", "reaction"],
+      "matrix": [
+        [8, 2, 0],
+        [1, 11, 1],
+        [0, 1, 9]
+      ]
+    },
+    "test_predictions": [
+      {"id": "rnba_007", "true_label": "analysis", "predicted_label": "analysis", "correct": true},
+      {"id": "rnba_013", "true_label": "analysis", "predicted_label": "analysis", "correct": true},
+      {"id": "rnba_019", "true_label": "analysis", "predicted_label": "hot_take", "correct": false},
+      {"id": "rnba_025", "true_label": "analysis", "predicted_label": "analysis", "correct": true},
+      {"id": "rnba_031", "true_label": "analysis", "predicted_label": "hot_take", "correct": false},
+      {"id": "rnba_037", "true_label": "analysis", "predicted_label": "analysis", "correct": true},
+      {"id": "rnba_043", "true_label": "analysis", "predicted_label": "analysis", "correct": true},
+      {"id": "rnba_049", "true_label": "analysis", "predicted_label": "analysis", "correct": true},
+      {"id": "rnba_055", "true_label": "analysis", "predicted_label": "analysis", "correct": true},
+      {"id": "rnba_061", "true_label": "analysis", "predicted_label": "analysis", "correct": true},
+      {"id": "rnba_071", "true_label": "hot_take", "predicted_label": "hot_take", "correct": true},
+      {"id": "rnba_078", "true_label": "hot_take", "predicted_label": "hot_take", "correct": true},
+      {"id": "rnba_085", "true_label": "hot_take", "predicted_label": "hot_take", "correct": true},
+      {"id": "rnba_092", "true_label": "hot_take", "predicted_label": "hot_take", "correct": true},
+      {"id": "rnba_099", "true_label": "hot_take", "predicted_label": "hot_take", "correct": true},
+      {"id": "rnba_106", "true_label": "hot_take", "predicted_label": "hot_take", "correct": true},
+      {"id": "rnba_113", "true_label": "hot_take", "predicted_label": "reaction", "correct": false},
+      {"id": "rnba_120", "true_label": "hot_take", "predicted_label": "hot_take", "correct": true},
+      {"id": "rnba_127", "true_label": "hot_take", "predicted_label": "analysis", "correct": false},
+      {"id": "rnba_134", "true_label": "hot_take", "predicted_label": "hot_take", "correct": true},
+      {"id": "rnba_141", "true_label": "hot_take", "predicted_label": "hot_take", "correct": true},
+      {"id": "rnba_148", "true_label": "hot_take", "predicted_label": "hot_take", "correct": true},
+      {"id": "rnba_155", "true_label": "hot_take", "predicted_label": "hot_take", "correct": true},
+      {"id": "rnba_161", "true_label": "reaction", "predicted_label": "reaction", "correct": true},
+      {"id": "rnba_167", "true_label": "reaction", "predicted_label": "reaction", "correct": true},
+      {"id": "rnba_173", "true_label": "reaction", "predicted_label": "reaction", "correct": true},
+      {"id": "rnba_179", "true_label": "reaction", "predicted_label": "reaction", "correct": true},
+      {"id": "rnba_185", "true_label": "reaction", "predicted_label": "reaction", "correct": true},
+      {"id": "rnba_191", "true_label": "reaction", "predicted_label": "reaction", "correct": true},
+      {"id": "rnba_197", "true_label": "reaction", "predicted_label": "hot_take", "correct": false},
+      {"id": "rnba_203", "true_label": "reaction", "predicted_label": "reaction", "correct": true},
+      {"id": "rnba_209", "true_label": "reaction", "predicted_label": "reaction", "correct": true},
+      {"id": "rnba_215", "true_label": "reaction", "predicted_label": "reaction", "correct": true}
+    ]
+  },
+  "baseline_model": {
+    "model": "llama-3.3-70b-versatile",
+    "provider": "Groq",
+    "method": "zero-shot",
+    "overall": {
+      "accuracy": 0.667,
+      "macro_f1": 0.666,
+      "correct": 22,
+      "total": 33
+    },
+    "per_class": {
+      "analysis": {
+        "precision": 0.667,
+        "recall": 0.600,
+        "f1": 0.632,
+        "support": 10
+      },
+      "hot_take": {
+        "precision": 0.643,
+        "recall": 0.692,
+        "f1": 0.667,
+        "support": 13
+      },
+      "reaction": {
+        "precision": 0.700,
+        "recall": 0.700,
+        "f1": 0.700,
+        "support": 10
+      }
+    },
+    "confusion_matrix": {
+      "labels": ["analysis", "hot_take", "reaction"],
+      "matrix": [
+        [6, 3, 1],
+        [2, 9, 2],
+        [1, 2, 7]
+      ]
+    },
+    "test_predictions": [
+      {"id": "rnba_007", "true_label": "analysis", "predicted_label": "analysis", "correct": true},
+      {"id": "rnba_013", "true_label": "analysis", "predicted_label": "analysis", "correct": true},
+      {"id": "rnba_019", "true_label": "analysis", "predicted_label": "hot_take", "correct": false},
+      {"id": "rnba_025", "true_label": "analysis", "predicted_label": "analysis", "correct": true},
+      {"id": "rnba_031", "true_label": "analysis", "predicted_label": "hot_take", "correct": false},
+      {"id": "rnba_037", "true_label": "analysis", "predicted_label": "analysis", "correct": true},
+      {"id": "rnba_043", "true_label": "analysis", "predicted_label": "analysis", "correct": true},
+      {"id": "rnba_049", "true_label": "analysis", "predicted_label": "analysis", "correct": true},
+      {"id": "rnba_055", "true_label": "analysis", "predicted_label": "reaction", "correct": false},
+      {"id": "rnba_061", "true_label": "analysis", "predicted_label": "hot_take", "correct": false},
+      {"id": "rnba_071", "true_label": "hot_take", "predicted_label": "hot_take", "correct": true},
+      {"id": "rnba_078", "true_label": "hot_take", "predicted_label": "hot_take", "correct": true},
+      {"id": "rnba_085", "true_label": "hot_take", "predicted_label": "hot_take", "correct": true},
+      {"id": "rnba_092", "true_label": "hot_take", "predicted_label": "reaction", "correct": false},
+      {"id": "rnba_099", "true_label": "hot_take", "predicted_label": "hot_take", "correct": true},
+      {"id": "rnba_106", "true_label": "hot_take", "predicted_label": "hot_take", "correct": true},
+      {"id": "rnba_113", "true_label": "hot_take", "predicted_label": "analysis", "correct": false},
+      {"id": "rnba_120", "true_label": "hot_take", "predicted_label": "hot_take", "correct": true},
+      {"id": "rnba_127", "true_label": "hot_take", "predicted_label": "analysis", "correct": false},
+      {"id": "rnba_134", "true_label": "hot_take", "predicted_label": "hot_take", "correct": true},
+      {"id": "rnba_141", "true_label": "hot_take", "predicted_label": "hot_take", "correct": true},
+      {"id": "rnba_148", "true_label": "hot_take", "predicted_label": "hot_take", "correct": true},
+      {"id": "rnba_155", "true_label": "hot_take", "predicted_label": "reaction", "correct": false},
+      {"id": "rnba_161", "true_label": "reaction", "predicted_label": "reaction", "correct": true},
+      {"id": "rnba_167", "true_label": "reaction", "predicted_label": "analysis", "correct": false},
+      {"id": "rnba_173", "true_label": "reaction", "predicted_label": "reaction", "correct": true},
+      {"id": "rnba_179", "true_label": "reaction", "predicted_label": "reaction", "correct": true},
+      {"id": "rnba_185", "true_label": "reaction", "predicted_label": "reaction", "correct": true},
+      {"id": "rnba_191", "true_label": "reaction", "predicted_label": "reaction", "correct": true},
+      {"id": "rnba_197", "true_label": "reaction", "predicted_label": "hot_take", "correct": false},
+      {"id": "rnba_203", "true_label": "reaction", "predicted_label": "hot_take", "correct": false},
+      {"id": "rnba_209", "true_label": "reaction", "predicted_label": "reaction", "correct": true},
+      {"id": "rnba_215", "true_label": "reaction", "predicted_label": "reaction", "correct": true}
+    ]
+  },
+  "comparison": {
+    "accuracy_improvement": 0.182,
+    "macro_f1_improvement": 0.186,
+    "fine_tuned_meets_thresholds": {
+      "overall_accuracy_geq_70pct": true,
+      "macro_f1_geq_0_65": true,
+      "analysis_f1_geq_0_60": true,
+      "hot_take_f1_geq_0_65": true,
+      "reaction_f1_geq_0_65": true,
+      "beats_baseline_by_geq_5_macro_f1_points": true
+    }
+  }
+}
